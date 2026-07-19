@@ -1,0 +1,11 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "typo-fire-popup",
+  "description": "Minimal capability for the Typo Fire suggestion popup",
+  "windows": ["typo-fire-popup"],
+  "permissions": [
+    "core:default",
+    "core:event:allow-listen",
+    "core:event:allow-unlisten"
+  ]
+}

@@ -1,0 +1,1155 @@
+:root {
+  --snap-text: rgba(255, 255, 255, 0.94);
+  --snap-text-dim: rgba(255, 255, 255, 0.64);
+  --snap-text-faint: rgba(255, 255, 255, 0.42);
+  --snap-panel: rgba(13, 14, 18, 0.72);
+  --snap-panel-strong: rgba(12, 13, 17, 0.88);
+  --snap-panel-soft: rgba(255, 255, 255, 0.08);
+  --snap-border: rgba(255, 255, 255, 0.14);
+  --snap-border-strong: rgba(255, 255, 255, 0.24);
+  --snap-danger: rgb(255, 112, 112);
+  --snap-ok: rgb(121, 214, 164);
+  --snap-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --snap-slow: 450ms;
+  --snap-medium: 280ms;
+  --snap-fast: 170ms;
+  --snap-stagger: 35ms;
+  font-family: "Inter", "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+  color: var(--snap-text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+  user-select: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.productivity-window {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+  padding: 10px;
+  color: var(--snap-text);
+  overflow: hidden;
+  transform-origin: top center;
+}
+
+.productivity-titlebar,
+.productivity-panel,
+.productivity-card,
+.productivity-toast,
+.productivity-alert-card,
+.productivity-alert-actions,
+.pomodoro-timer-surface,
+.pomodoro-settings-drawer {
+  border: 1px solid var(--snap-border);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04)),
+    var(--snap-panel);
+  box-shadow:
+    0 16px 38px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+}
+
+.productivity-window.phase-opening {
+  animation: productivity-open var(--snap-slow) var(--snap-ease) both;
+}
+
+.productivity-window.productivity-pomodoro.phase-opening {
+  animation: productivity-pomodoro-open 180ms ease-out both;
+}
+
+.productivity-window.phase-closing {
+  pointer-events: none;
+  animation: productivity-close 240ms var(--snap-ease) forwards;
+}
+
+.productivity-window.phase-switching .productivity-panel,
+.productivity-window.phase-expanding .productivity-panel,
+.productivity-window.phase-collapsing .productivity-panel,
+.productivity-card {
+  animation: productivity-card-in var(--snap-slow) var(--snap-ease) both;
+  animation-delay: var(--item-delay, 0ms);
+}
+
+.productivity-titlebar {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px 7px 10px;
+  border-radius: 18px;
+}
+
+.productivity-brand,
+.productivity-actions,
+.productivity-row,
+.productivity-add-line,
+.calendar-selected-head,
+.pomodoro-controls {
+  display: flex;
+  align-items: center;
+}
+
+.productivity-brand {
+  min-width: 0;
+  gap: 9px;
+  flex: 0 1 auto;
+}
+
+.productivity-brand-icon {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: rgb(10, 11, 14);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.productivity-brand span:last-child {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.productivity-brand strong,
+.productivity-item-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.productivity-brand strong {
+  font-size: 13px;
+  line-height: 1.15;
+  font-weight: 820;
+}
+
+.productivity-brand small,
+.productivity-meta {
+  color: var(--snap-text-dim);
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.productivity-drag-strip {
+  align-self: stretch;
+  flex: 1 1 auto;
+  min-width: 28px;
+  cursor: grab;
+}
+
+.productivity-drag-strip:active {
+  cursor: grabbing;
+}
+
+.productivity-actions {
+  flex: 0 0 auto;
+  gap: 7px;
+}
+
+.productivity-icon-button,
+.productivity-command,
+.productivity-chip,
+.productivity-check,
+.calendar-repeat-control button,
+.calendar-weekday-picker button {
+  min-width: 0;
+  border: 1px solid var(--snap-border);
+  color: var(--snap-text);
+  background: var(--snap-panel-soft);
+  cursor: pointer;
+  transition:
+    transform var(--snap-fast) var(--snap-ease),
+    background-color var(--snap-medium) var(--snap-ease),
+    border-color var(--snap-medium) var(--snap-ease),
+    opacity var(--snap-medium) var(--snap-ease);
+}
+
+.productivity-icon-button {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.productivity-icon-button:hover,
+.productivity-command:hover,
+.productivity-check:hover,
+.calendar-repeat-control button:hover,
+.calendar-weekday-picker button:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: var(--snap-border-strong);
+}
+
+.productivity-icon-button:active,
+.productivity-command:active,
+.productivity-check:active {
+  transform: scale(0.95);
+}
+
+.productivity-icon-button.active,
+.calendar-repeat-control button.active,
+.calendar-weekday-picker button.active {
+  color: rgb(9, 10, 13);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.productivity-icon-button.danger:hover {
+  color: rgb(255, 206, 206);
+  background: rgba(255, 112, 112, 0.2);
+  border-color: rgba(255, 112, 112, 0.36);
+}
+
+.productivity-content {
+  min-height: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.productivity-panel {
+  min-height: 0;
+  border-radius: 22px;
+}
+
+.productivity-command {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 13px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.productivity-command.primary {
+  color: rgb(8, 9, 11);
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.productivity-chip {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: var(--snap-text-dim);
+  font-size: 10px;
+}
+
+.productivity-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 12px;
+  z-index: 20;
+  max-width: min(420px, calc(100vw - 32px));
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--snap-text);
+  pointer-events: none;
+}
+
+.productivity-scroll {
+  min-height: 0;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.productivity-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.productivity-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+}
+
+.productivity-empty {
+  display: grid;
+  place-items: center;
+  min-height: 108px;
+  color: var(--snap-text-faint);
+  font-size: 12px;
+}
+
+.productivity-section-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 2px;
+  color: var(--snap-text-dim);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Todo Calendar */
+
+.productivity-calendar {
+  gap: 8px;
+}
+
+.productivity-calendar .productivity-titlebar {
+  min-height: 38px;
+  padding: 5px 6px 5px 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)),
+    rgba(12, 13, 18, 0.38);
+}
+
+.productivity-calendar .productivity-brand-icon {
+  width: 27px;
+  height: 27px;
+  flex-basis: 27px;
+}
+
+.productivity-calendar .productivity-brand strong {
+  font-size: 12px;
+}
+
+.productivity-calendar .productivity-brand small {
+  display: none;
+}
+
+.productivity-calendar .productivity-actions .productivity-icon-button {
+  width: 28px;
+  height: 28px;
+  flex-basis: 28px;
+}
+
+.productivity-calendar-layout {
+  display: grid;
+  grid-template-columns: minmax(292px, 0.82fr) minmax(360px, 1.18fr);
+  gap: 10px;
+}
+
+.calendar-month-panel,
+.calendar-agenda-panel {
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.calendar-month-panel {
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.calendar-agenda-panel {
+  grid-template-rows: auto auto auto 1fr;
+}
+
+.calendar-month-head,
+.calendar-selected-head {
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.calendar-month-head strong,
+.calendar-selected-head strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.calendar-selected-head > div {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.productivity-calendar-weekdays,
+.productivity-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.productivity-calendar-grid {
+  grid-template-rows: repeat(6, minmax(34px, 1fr));
+}
+
+.productivity-calendar-weekdays span {
+  color: var(--snap-text-faint);
+  font-size: 10px;
+  text-align: center;
+  font-weight: 800;
+}
+
+.productivity-day {
+  position: relative;
+  aspect-ratio: 1;
+  min-height: 34px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--snap-text);
+  cursor: pointer;
+  transition:
+    transform var(--snap-fast) var(--snap-ease),
+    background-color var(--snap-medium) var(--snap-ease),
+    border-color var(--snap-medium) var(--snap-ease);
+}
+
+.productivity-day:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.productivity-day.active {
+  color: rgb(8, 9, 11);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.productivity-day.muted {
+  color: var(--snap-text-faint);
+}
+
+.productivity-day small {
+  position: absolute;
+  right: 5px;
+  bottom: 4px;
+  min-width: 14px;
+  height: 14px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  font-size: 9px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.calendar-add-line {
+  gap: 8px;
+}
+
+.calendar-add-line input,
+.calendar-time-control input,
+.pomodoro-number-field input {
+  min-width: 0;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  outline: none;
+  background: rgba(4, 6, 10, 0.34);
+  color: var(--snap-text);
+}
+
+.calendar-add-line input {
+  flex: 1 1 auto;
+  min-height: 38px;
+  padding: 0 12px;
+}
+
+.calendar-task-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.calendar-time-control,
+.calendar-repeat-control,
+.calendar-weekday-picker {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.055);
+  color: var(--snap-text-dim);
+}
+
+.calendar-time-control input {
+  width: 92px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 9px;
+}
+
+.calendar-repeat-control {
+  flex: 1 1 240px;
+  overflow: hidden;
+}
+
+.calendar-repeat-control button,
+.calendar-weekday-picker button {
+  min-height: 26px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.calendar-repeat-control button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.calendar-weekday-picker button {
+  width: 28px;
+  padding: 0;
+}
+
+.productivity-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 16px;
+}
+
+.productivity-check {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.todo-card.done {
+  opacity: 0.56;
+}
+
+.productivity-row {
+  min-width: 0;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.productivity-item-title {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.productivity-item-body {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+/* Pomodoro */
+
+.productivity-pomodoro {
+  min-width: 0;
+  --pomodoro-ring-size: 164px;
+  --pomodoro-clock-size: clamp(46px, 7vw, 58px);
+}
+
+.productivity-pomodoro .productivity-titlebar {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035)),
+    rgba(9, 10, 14, 0.9);
+}
+
+.pomodoro-minimal-layout {
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+
+.pomodoro-horizontal-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.productivity-pomodoro:not(.settings-open) .pomodoro-horizontal-layout {
+  width: 100%;
+}
+
+.productivity-pomodoro.settings-open .pomodoro-horizontal-layout {
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pomodoro-timer-surface {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: var(--pomodoro-ring-size) minmax(190px, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-areas:
+    "ring side";
+  align-items: center;
+  justify-content: stretch;
+  gap: clamp(14px, 3.6vw, 28px);
+  padding: 16px 18px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.12), transparent 42%),
+    rgba(8, 9, 13, 0.94);
+}
+
+.productivity-pomodoro.settings-open .pomodoro-timer-surface {
+  grid-template-columns: var(--pomodoro-ring-size) minmax(240px, 1fr);
+  gap: 12px;
+  padding: 12px;
+}
+
+.pomodoro-ring-shell {
+  grid-area: ring;
+  position: relative;
+  width: var(--pomodoro-ring-size);
+  min-width: 0;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  justify-self: center;
+}
+
+.pomodoro-progress-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.24));
+}
+
+.pomodoro-progress-track,
+.pomodoro-progress-value {
+  fill: none;
+  stroke-width: 10;
+}
+
+.pomodoro-progress-track {
+  stroke: rgba(255, 255, 255, 0.11);
+}
+
+.pomodoro-progress-value {
+  stroke: rgba(255, 255, 255, 0.96);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 760ms var(--snap-ease);
+}
+
+.productivity-pomodoro.phase-opening .pomodoro-progress-value {
+  transition: none;
+}
+
+.pomodoro-time-stack {
+  position: relative;
+  width: calc(100% - 34px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 3px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.12), transparent 42%),
+    linear-gradient(180deg, rgba(22, 23, 29, 0.98), rgba(7, 8, 11, 0.99));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.pomodoro-round-pill {
+  max-width: calc(100% - 10px);
+  min-height: 18px;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 9px;
+  border-radius: 999px;
+  color: var(--snap-text-dim);
+  background: rgba(255, 255, 255, 0.07);
+  font-size: 10px;
+  font-weight: 830;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pomodoro-round-count {
+  min-width: 42px;
+  height: 18px;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border-radius: 999px;
+  color: rgba(31, 35, 41, 0.72);
+  background: rgba(31, 35, 41, 0.06);
+  font-size: 11px;
+  font-weight: 840;
+  font-variant-numeric: tabular-nums;
+}
+
+body.theme-liquid-glass .productivity-pomodoro .productivity-titlebar,
+body.theme-liquid-glass .productivity-pomodoro .pomodoro-timer-surface,
+body.theme-liquid-glass .productivity-pomodoro .pomodoro-settings-drawer,
+body.theme-liquid-glass .productivity-calendar .productivity-titlebar,
+body.theme-liquid-glass .productivity-calendar .calendar-month-panel,
+body.theme-liquid-glass .productivity-calendar .calendar-agenda-panel,
+body.theme-liquid-glass .productivity-alert-card,
+body.theme-liquid-glass .productivity-alert-actions {
+  isolation: isolate;
+  overflow: hidden;
+  color: rgba(248, 250, 252, 0.94) !important;
+  border-color: rgba(255, 255, 255, calc(0.16 + var(--snap-border-strength, 0.3) * 0.16)) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.065) 48%, rgba(255, 255, 255, 0.045)),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, calc(0.045 + var(--snap-glass-opacity, 0.72) * 0.07)),
+      rgba(20, 22, 28, calc(0.24 + (1 - var(--snap-glass-opacity, 0.72)) * 0.18))
+    ) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.22) !important;
+  backdrop-filter: blur(calc(var(--snap-glass-blur, 30px) * 0.72)) saturate(var(--snap-glass-saturation, 165%)) brightness(1.02) !important;
+  -webkit-backdrop-filter: blur(calc(var(--snap-glass-blur, 30px) * 0.72)) saturate(var(--snap-glass-saturation, 165%)) brightness(1.02) !important;
+}
+
+body.theme-liquid-glass .productivity-alert-icon {
+  color: rgba(248, 250, 252, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.13);
+}
+
+body.theme-liquid-glass .productivity-brand-icon {
+  color: rgba(248, 250, 252, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.075);
+}
+
+body.theme-liquid-glass .productivity-pomodoro .pomodoro-time-stack {
+  color: rgba(248, 250, 252, 0.96) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.14), transparent 42%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(16, 18, 24, 0.52)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2) !important;
+}
+
+body.theme-liquid-glass .productivity-pomodoro .productivity-clock {
+  color: rgba(248, 250, 252, 0.96) !important;
+}
+
+body.theme-liquid-glass .productivity-pomodoro .pomodoro-time-stack small,
+body.theme-liquid-glass .productivity-pomodoro .pomodoro-next-line,
+body.theme-liquid-glass .productivity-pomodoro .pomodoro-round-pill {
+  color: rgba(248, 250, 252, 0.68) !important;
+}
+
+body.theme-liquid-glass .productivity-pomodoro .pomodoro-round-pill,
+body.theme-liquid-glass .productivity-pomodoro .pomodoro-round-count {
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.075) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.13) !important;
+}
+
+body.theme-liquid-glass .productivity-pomodoro .pomodoro-round-count {
+  color: rgba(248, 250, 252, 0.92) !important;
+}
+
+body.theme-liquid-glass .productivity-calendar .productivity-day.active {
+  border-color: var(--snap-feature-border-strong) !important;
+  color: var(--snap-feature-text) !important;
+  background: var(--snap-feature-bg-active) !important;
+}
+
+body.theme-liquid-glass .productivity-alert-window {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.productivity-clock {
+  max-width: calc(100% - 12px);
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--pomodoro-clock-size);
+  line-height: 0.95;
+  font-weight: 860;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.96);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.productivity-clock .counter-container {
+  display: block;
+}
+
+.productivity-clock .counter-counter {
+  line-height: 0.95;
+}
+
+.pomodoro-clock-separator {
+  display: inline-block;
+  margin: 0 0.015em;
+  line-height: 0.95;
+  font-variant-numeric: tabular-nums;
+}
+
+.productivity-clock.medium {
+  font-size: calc(var(--pomodoro-clock-size) * 0.7);
+}
+
+.productivity-clock.compact {
+  font-size: calc(var(--pomodoro-clock-size) * 0.56);
+}
+
+.pomodoro-time-stack small,
+.pomodoro-next-line {
+  color: var(--snap-text-dim);
+  font-size: 12px;
+}
+
+.pomodoro-side-panel {
+  grid-area: side;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-content: center;
+  justify-items: stretch;
+  gap: 12px;
+}
+
+.pomodoro-action-panel {
+  width: 100%;
+  display: grid;
+  align-content: center;
+  justify-items: stretch;
+  gap: 14px;
+}
+
+.pomodoro-next-line {
+  min-height: 0;
+  max-width: none;
+  font-size: 13px;
+  font-weight: 760;
+  text-align: center;
+}
+
+.pomodoro-controls {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr) 40px;
+  justify-content: stretch;
+  gap: 10px;
+}
+
+.pomodoro-primary {
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+}
+
+.pomodoro-reset {
+  width: 40px;
+  height: 38px;
+  flex-basis: 40px;
+}
+
+.pomodoro-settings-drawer {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  padding: 10px;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)),
+    rgba(12, 13, 18, 0.7);
+  box-shadow: none;
+  overflow: hidden;
+  animation: none;
+}
+
+.pomodoro-drawer-head {
+  display: grid;
+  gap: 1px;
+}
+
+.pomodoro-drawer-head strong {
+  font-size: 12px;
+}
+
+.pomodoro-drawer-head span {
+  color: var(--snap-feature-text-dim);
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.pomodoro-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 6px 8px;
+}
+
+.pomodoro-number-field {
+  display: grid;
+  align-content: start;
+  gap: 3px;
+}
+
+.pomodoro-number-field > span {
+  color: var(--snap-feature-text-dim);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.pomodoro-number-field > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+}
+
+.pomodoro-number-field input {
+  height: 30px;
+  padding: 0 8px;
+}
+
+.pomodoro-number-field small {
+  color: var(--snap-feature-text-faint);
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.pomodoro-apply {
+  width: 100%;
+  min-height: 34px;
+}
+
+/* Alert window */
+
+.productivity-alert-window {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  gap: 8px;
+  padding: 10px;
+  color: var(--snap-text);
+  animation: productivity-open var(--snap-slow) var(--snap-ease) both;
+}
+
+.productivity-alert-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 22px;
+}
+
+.productivity-alert-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: rgb(9, 10, 13);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.productivity-alert-body {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.productivity-alert-body strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.productivity-alert-body small {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--snap-text-dim);
+  font-size: 11px;
+}
+
+.productivity-alert-kicker {
+  color: var(--snap-text-faint);
+  font-size: 10px;
+  font-weight: 840;
+  text-transform: uppercase;
+}
+
+.productivity-alert-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 999px;
+}
+
+.productivity-alert-feedback {
+  justify-self: center;
+  max-width: calc(100vw - 24px);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(12, 13, 18, 0.86);
+  color: var(--snap-text-dim);
+  font-size: 11px;
+}
+
+@keyframes productivity-open {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes productivity-pomodoro-open {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes productivity-close {
+  to {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+    filter: blur(8px);
+  }
+}
+
+@keyframes productivity-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pomodoro-drawer-in {
+  from {
+    opacity: 0;
+    transform: translateX(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@media (max-width: 700px) {
+  .productivity-calendar-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 460px) {
+  .productivity-pomodoro.settings-open .pomodoro-horizontal-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .pomodoro-timer-surface {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "ring"
+      "side";
+    place-items: center;
+  }
+
+  .pomodoro-side-panel {
+    width: min(100%, 240px);
+    justify-items: stretch;
+  }
+
+  .pomodoro-next-line {
+    justify-self: center;
+  }
+
+  .pomodoro-controls {
+    width: 100%;
+  }
+
+  .pomodoro-field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pomodoro-settings-drawer {
+    max-height: 50vh;
+    overflow: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

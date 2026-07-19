@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Baixe o Snapbar para Windows ou acompanhe o manifesto público do instalador." />
+    <link rel="canonical" href="https://snapbar.app/download" />
+    <meta property="og:title" content="Download do Snapbar" />
+    <meta property="og:description" content="Instalador público para Windows e checksum do build." />
+    <meta property="og:image" content="https://snapbar.app/assets/snapbar-overview.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Download do Snapbar</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./src/releases.ts"></script>
+  </head>
+  <body>
+    <div class="site-shell page-narrow">
+      <header class="site-nav">
+        <a class="brand" href="/">Snapbar</a>
+        <nav aria-label="Principal"><a href="/">Início</a><a href="https://github.com/" rel="noreferrer">GitHub</a></nav>
+      </header>
+
+      <main class="result-layout">
+        <section class="result-card" aria-labelledby="download-title">
+          <p class="section-kicker">Download</p>
+          <h1 id="download-title">Baixe o Snapbar para Windows.</h1>
+          <p>Quando houver build publicado, o manifesto mostra versão, tamanho e SHA-256.</p>
+
+          <div class="download-panel" id="manifestPanel">
+            <strong id="installerTitle">Instalador do Snapbar</strong>
+            <p id="installerStatus" class="status" role="status" aria-live="polite">Carregando manifesto do instalador...</p>
+            <p id="installerMeta" class="meta-line"></p>
+            <code id="installerChecksum" class="checksum" hidden></code>
+          </div>
+
+          <div class="actions">
+            <a class="button" id="installerDownload" aria-disabled="true">Baixar para Windows</a>
+            <a class="button button-secondary" href="https://github.com/" rel="noreferrer">Ver código</a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

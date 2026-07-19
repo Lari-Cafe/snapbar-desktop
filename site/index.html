@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Snapbar is an open-source, local-first quick toolbar for Windows 10 and 11." />
+    <link rel="canonical" href="https://snapbar.app/" />
+    <meta property="og:title" content="Snapbar — Open-source quick tools for Windows" />
+    <meta property="og:description" content="Capture, record, download, take notes, and automate small tasks from one local-first toolbar." />
+    <meta property="og:image" content="https://snapbar.app/assets/snapbar-overview.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Snapbar — Open-source quick tools for Windows</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./src/landing.ts"></script>
+
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-nav">
+        <a class="brand" href="/">Snapbar</a>
+        <nav aria-label="Primary navigation">
+          <a href="#features">Features</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#download">Download</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a class="button button-small" href="/download">Download</a>
+      </header>
+
+      <main>
+        <section class="hero section" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="section-kicker">Open source · Windows 10 and 11</p>
+            <h1 id="hero-title">The quick toolbar for Windows tasks.</h1>
+            <p>Capture, record, download, take notes, dictate, and expand text without opening five different apps.</p>
+            <div class="actions">
+              <a class="button" href="/download">Download Snapbar</a>
+              <a class="button button-secondary" href="https://github.com/Lari-Cafe/SnapBar" rel="noreferrer">View source</a>
+            </div>
+            <ul class="trust-list" aria-label="Snapbar guarantees"><li>One installer</li><li>No account</li><li>Local-first</li></ul>
+          </div>
+          <figure class="hero-visual">
+            <img src="./assets/snapbar-overview.svg" width="1200" height="620" alt="Snapbar floating toolbar preview on Windows" />
+            <figcaption>A lightweight, local-first tool made in the open.</figcaption>
+          </figure>
+        </section>
+
+        <section class="problem section" aria-labelledby="problem-title">
+          <h2 id="problem-title">A simple task should not become a window-switching ritual.</h2>
+          <div class="problem-list">
+            <p><strong>Capture and recording are scattered.</strong> Snapbar puts screenshots and video in one compact bar.</p>
+            <p><strong>Downloads need a separate tool.</strong> Paste a public link and save video or audio.</p>
+            <p><strong>Repeated text is tiring.</strong> Typo Fire expands saved snippets without leaving your current field.</p>
+          </div>
+        </section>
+
+        <section class="features section" id="features" aria-labelledby="features-title">
+          <div class="section-heading">
+            <h2 id="features-title">Everyday Windows tasks, one launch point.</h2>
+            <p>Made for ordinary PCs: no terminal, no Node, no separate FFmpeg, yt-dlp, Deno, or WebView2 install after setup.</p>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card feature-wide"><span>Capture</span><h3>Native Windows snips.</h3><p>Choose a folder and save a PNG without opening another app.</p></article>
+            <article class="feature-card"><span>Recording</span><h3>Screen with audio.</h3><p>Microphone, system audio, or both—with FFmpeg included.</p></article>
+            <article class="feature-card"><span>Downloads</span><h3>Public links to MP4 or MP3.</h3><p>No browser cookies and no permanent link history.</p></article>
+            <article class="feature-card"><span>Notes & focus</span><h3>Keep the next thing visible.</h3><p>Local notes, tasks, calendar, and a Pomodoro timer.</p></article>
+            <article class="feature-card"><span>Win+H</span><h3>Native voice typing.</h3><p>Speech stays with Windows Voice Typing.</p></article>
+            <article class="feature-card"><span>Typo Fire</span><h3>Global snippets.</h3><p>Type a trigger and choose your saved text.</p></article>
+            <article class="feature-card feature-strong"><span>Local-first</span><h3>Your data stays on your PC.</h3><p>No account, sync service, or private server.</p></article>
+          </div>
+        </section>
+
+        <section class="privacy section" id="privacy" aria-labelledby="privacy-title">
+          <div class="privacy-panel">
+            <h2 id="privacy-title">Light by default. Private by design.</h2>
+            <ul>
+              <li>Voice-typing audio stays with Windows.</li>
+              <li>Downloads do not read browser cookies.</li>
+              <li>Videos, screenshots, notes, and MP3s stay local.</li>
+              <li>No account, cloud sync, or in-app telemetry.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="download-section section" id="download" aria-labelledby="download-title">
+          <div class="download-card">
+            <div>
+              <p class="section-kicker">Windows x64</p>
+              <h2 id="download-title">Install once. Keep your workflow close.</h2>
+              <p>The Windows installer includes the runtime tools Snapbar needs, including WebView2, FFmpeg, yt-dlp, and Deno.</p>
+            </div>
+            <div class="actions">
+              <a class="button" href="/download">Download for Windows</a>
+              <a class="button button-secondary" href="https://github.com/Lari-Cafe/SnapBar" rel="noreferrer">Source on GitHub</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="faq section" id="faq" aria-labelledby="faq-title">
+          <h2 id="faq-title">Quick answers</h2>
+          <div class="faq-list">
+            <details><summary>Do I need to install Node, Rust, FFmpeg, or WebView2?</summary><p>No. The packaged app includes what it needs; developers only need those tools to build Snapbar from source.</p></details>
+            <details><summary>Do I need an account?</summary><p>No. Snapbar works locally, with no login or cloud sync.</p></details>
+            <details><summary>Does Snapbar send my files somewhere?</summary><p>No. Screenshots, videos, notes, snippets, and downloads are not sent to a Snapbar server.</p></details>
+            <details><summary>What still depends on Windows or the internet?</summary><p>Voice typing uses Windows Voice Typing; downloads require a supported public source and an internet connection; recording depends on available display and audio devices.</p></details>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Snapbar · Open source</span>
+        <a href="/download">Download</a>
+        <a href="https://github.com/Lari-Cafe/SnapBar" rel="noreferrer">GitHub</a>
+        <a href="#privacy">Privacy</a>
+      </footer>
+    </div>
+  </body>
+</html>

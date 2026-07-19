@@ -1,0 +1,31 @@
+.typo-fire-window {
+  --settings-window-radius: 8px;
+}
+
+.typo-fire-window-header {
+  padding-left: 16px;
+}
+
+.typo-fire-window-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.typo-fire-tool-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px;
+}
+
+.typo-fire-tool-content .settings-section {
+  max-width: none;
+  padding: 0;
+}
+
+.typo-fire-tool-content .typo-fire-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}

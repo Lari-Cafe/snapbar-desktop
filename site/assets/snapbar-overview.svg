@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-label="Snapbar overview">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#111315"/>
+      <stop offset="1" stop-color="#26312d"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="22" stdDeviation="24" flood-color="#000" flood-opacity=".35"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="620" rx="34" fill="url(#bg)"/>
+  <g opacity=".16" stroke="#fff" fill="none">
+    <circle cx="140" cy="120" r="46"/>
+    <path d="M260 95h120M260 135h80M965 105h115M965 145h70"/>
+    <rect x="805" y="405" width="235" height="86" rx="18"/>
+    <path d="M135 460c95-90 190 90 285 0s190 90 285 0"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="170" y="228" width="860" height="134" rx="67" fill="#1d2021" stroke="#ffffff" stroke-opacity=".13"/>
+    <circle cx="239" cy="295" r="34" fill="#2a2e2f"/>
+    <path d="M239 277v36M221 295h36" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+    <g fill="#2a2e2f" stroke="#fff" stroke-opacity=".12">
+      <circle cx="325" cy="295" r="30"/>
+      <circle cx="405" cy="295" r="30"/>
+      <circle cx="485" cy="295" r="30"/>
+      <circle cx="565" cy="295" r="30"/>
+      <circle cx="645" cy="295" r="30"/>
+      <circle cx="725" cy="295" r="30"/>
+    </g>
+    <g stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none">
+      <rect x="313" y="283" width="24" height="24" rx="5"/>
+      <path d="M397 283h16v24h-16zM393 289h24"/>
+      <path d="M476 284l20 11-20 11z"/>
+      <path d="M553 287h24M553 303h24"/>
+      <path d="M635 286l20 18M655 286l-20 18"/>
+      <path d="M720 282v26M707 295h26"/>
+    </g>
+  </g>
+  <text x="600" y="108" text-anchor="middle" fill="#fff" font-family="Segoe UI,sans-serif" font-size="58" font-weight="800">Snapbar</text>
+  <text x="600" y="160" text-anchor="middle" fill="#bfc8c2" font-family="Segoe UI,sans-serif" font-size="24">captura, grava, atalhos e snippets em uma barra flutuante</text>
+  <g font-family="Segoe UI,sans-serif" font-size="22" fill="#e9eee9" font-weight="700">
+    <text x="250" y="455">Prints</text>
+    <text x="405" y="455">Videos</text>
+    <text x="560" y="455">Typo Fire</text>
+    <text x="750" y="455">Shortcuts</text>
+  </g>
+</svg>

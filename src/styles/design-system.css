@@ -1,0 +1,909 @@
+@import "tailwindcss";
+
+@keyframes moveBackground {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 0% -1000%;
+  }
+}
+
+:root {
+  --snap-accent: #e5e7eb;
+  --snap-bg: rgba(8, 12, 20, 0.62);
+  --snap-bg-strong: rgba(10, 13, 22, 0.84);
+  --snap-text: rgba(255, 255, 255, 0.94);
+  --snap-text-dim: rgba(255, 255, 255, 0.62);
+  --snap-text-faint: rgba(255, 255, 255, 0.42);
+  --snap-glass-blur: 34px;
+  --snap-glass-saturation: 155%;
+  --snap-glass-opacity: 0.74;
+  --snap-radius: 14px;
+  --snap-border-strength: 0.28;
+  --snap-highlight-strength: 0.42;
+  --snap-shadow-strength: 0;
+  --snap-motion-speed: 1;
+  --snap-motion-stagger: 38ms;
+  --snap-motion-morph: 0.82;
+  --snap-wallpaper-image: none;
+  --snap-wallpaper-dim: 0.28;
+  --snap-wallpaper-blur: 0px;
+  --snap-ease-glass: cubic-bezier(0.22, 1, 0.36, 1);
+  --snap-border: rgba(255, 255, 255, calc(0.11 + var(--snap-border-strength) * 0.22));
+  --snap-border-strong: rgba(255, 255, 255, calc(0.18 + var(--snap-border-strength) * 0.26));
+  --snap-highlight: rgba(255, 255, 255, calc(0.08 + var(--snap-highlight-strength) * 0.24));
+  --snap-shadow: none;
+  --text: var(--snap-text);
+  --text-dim: var(--snap-text-dim);
+  --accent: var(--snap-accent);
+  --glass-edge: var(--snap-border-strong);
+  --glass-edge-soft: var(--snap-border);
+  --glass-shadow: var(--snap-shadow);
+}
+
+body {
+  --settings-text: var(--snap-text);
+  --settings-text-dim: var(--snap-text-dim);
+  --settings-text-faint: var(--snap-text-faint);
+  --settings-accent: var(--snap-accent);
+  --settings-glass-edge: var(--snap-border-strong);
+  --settings-glass-edge-soft: var(--snap-border);
+  --settings-card-bg: rgba(255, 255, 255, calc(0.045 + var(--snap-glass-opacity) * 0.06));
+  --settings-card-border: var(--snap-border);
+  --settings-divider: rgba(255, 255, 255, 0.075);
+  --settings-window-radius: var(--snap-radius);
+  --settings-panel-radius: max(8px, calc(var(--snap-radius) - 4px));
+  --settings-control-radius: min(10px, max(6px, calc(var(--snap-radius) - 7px)));
+  --settings-shadow: var(--snap-shadow);
+  color: var(--snap-text);
+}
+
+body.theme-liquid-glass {
+  --snap-bg: rgba(9, 10, 14, 0.62);
+  --snap-bg-strong: rgba(12, 13, 17, 0.84);
+}
+
+body.snap-has-wallpaper::before {
+  content: "";
+  position: fixed;
+  inset: -24px;
+  z-index: -2;
+  pointer-events: none;
+  background-image: var(--snap-wallpaper-image);
+  background-size: cover;
+  background-position: center;
+  filter: blur(var(--snap-wallpaper-blur)) saturate(115%);
+  opacity: 1;
+}
+
+body.snap-has-wallpaper::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(0, 0, 0, var(--snap-wallpaper-dim));
+}
+
+body.snap-main-toolbar-route,
+body.snap-main-toolbar-route::before,
+body.snap-main-toolbar-route::after {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+body.snap-main-toolbar-route::before,
+body.snap-main-toolbar-route::after {
+  content: none !important;
+  display: none !important;
+}
+
+.settings-window,
+.downloads-window,
+.productivity-alert-window,
+.typo-fire-window,
+.typo-fire-popup {
+  color: var(--snap-text);
+  background:
+    radial-gradient(circle at 22% 0%, rgba(255, 255, 255, 0.12), transparent 30%),
+    radial-gradient(circle at 82% 10%, color-mix(in srgb, var(--snap-accent) 9%, transparent), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, calc(0.09 * var(--snap-glass-opacity))), rgba(255, 255, 255, calc(0.035 * var(--snap-glass-opacity)))),
+    var(--snap-bg-strong) !important;
+  border-color: var(--snap-border) !important;
+  border-radius: var(--snap-radius) !important;
+  box-shadow: var(--snap-shadow),
+    inset 0 1px 0 var(--snap-highlight),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.16) !important;
+  backdrop-filter: blur(var(--snap-glass-blur)) saturate(var(--snap-glass-saturation)) brightness(1.04) !important;
+  -webkit-backdrop-filter: blur(var(--snap-glass-blur)) saturate(var(--snap-glass-saturation)) brightness(1.04) !important;
+}
+
+.settings-card,
+.downloads-panel,
+.downloads-compose,
+.downloads-queue,
+.downloads-job,
+.media-compact-strip,
+.media-volume-dock,
+.media-volume-card,
+.media-feedback,
+.media-transport,
+.media-cover,
+.productivity-titlebar,
+.productivity-panel,
+.productivity-card,
+.productivity-toast,
+.productivity-alert-card,
+.productivity-alert-actions,
+.pomodoro-card,
+.todo-card,
+.typo-fire-card,
+.note-editor {
+  border-color: var(--snap-border) !important;
+  background: rgba(255, 255, 255, calc(0.04 + var(--snap-glass-opacity) * 0.055)) !important;
+  box-shadow: inset 0 1px 0 var(--snap-highlight);
+}
+
+button,
+input,
+select,
+textarea {
+  accent-color: var(--snap-accent);
+}
+
+/* ponytail: keep controls quiet; click-press effects made the UI feel laggy. */
+button:not(:disabled),
+a[href],
+summary,
+select,
+input[type="checkbox"],
+input[type="range"] {
+  transform-origin: center;
+  transition:
+    background-image var(--snap-motion-base) var(--snap-motion-ease),
+    background-color var(--snap-motion-base) var(--snap-motion-ease),
+    border-color var(--snap-motion-base) var(--snap-motion-ease),
+    color var(--snap-motion-base) var(--snap-motion-ease),
+    opacity var(--snap-motion-base) var(--snap-motion-ease);
+}
+
+button:not(:disabled) > svg,
+button:not(:disabled) > span {
+  transition: opacity var(--snap-motion-fast) var(--snap-motion-ease);
+}
+
+button:not(:disabled) > span {
+  display: inline-block;
+}
+
+button:hover:not(:disabled):not(.floating-toolbar-collapsed) {
+  background-image: none !important;
+}
+
+.settings-action-mini,
+.settings-preset-btn.active,
+.activation-actions .activation-primary {
+  border-color: color-mix(in srgb, var(--snap-accent) 44%, transparent) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.72)),
+    color-mix(in srgb, var(--snap-accent) 20%, white) !important;
+  color: rgba(7, 10, 16, 0.92) !important;
+}
+
+.snap-reduced-motion * {
+  animation-duration: 1ms !important;
+  transition-duration: 1ms !important;
+  scroll-behavior: auto !important;
+}
+
+/*
+  Sombra desligada no produto inteiro.
+  Mantemos blur/backdrop para o efeito de vidro, mas removemos qualquer sombra
+  externa/interna que crie quadrados escuros atrás das janelas e do Donut.
+*/
+*,
+*::before,
+*::after {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.icon-btn,
+.icon-btn:hover,
+.icon-btn.recording,
+.icon-btn.listening,
+.core-glyph,
+.glass-btn > span:first-child,
+.pomodoro-progress-ring {
+  filter: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Figma white feature contract.
+   Feature windows keep the native Tauri canvas transparent; only their inner
+   surfaces draw the white Snapbar UI. */
+:root {
+  --snap-motion-fast: 120ms;
+  --snap-motion-base: 190ms;
+  --snap-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --snap-feature-bg: #ffffff;
+  --snap-feature-bg-soft: #f6f7f9;
+  --snap-feature-bg-hover: #eef1f5;
+  --snap-feature-bg-active: #e4e8ee;
+  --snap-feature-bg-muted: #f3f5f8;
+  --snap-feature-text: #1f2329;
+  --snap-feature-text-dim: rgba(31, 35, 41, 0.72);
+  --snap-feature-text-faint: rgba(31, 35, 41, 0.52);
+  --snap-feature-border: rgba(31, 35, 41, 0.1);
+  --snap-feature-border-strong: rgba(31, 35, 41, 0.22);
+  --snap-feature-radius: 10px;
+  --snap-feature-radius-pill: 999px;
+  --snap-bg: transparent;
+  --snap-bg-strong: var(--snap-feature-bg);
+  --snap-text: var(--snap-feature-text);
+  --snap-text-dim: var(--snap-feature-text-dim);
+  --snap-text-faint: var(--snap-feature-text-faint);
+  --snap-border: var(--snap-feature-border);
+  --snap-border-strong: var(--snap-feature-border-strong);
+  --snap-highlight: rgba(255, 255, 255, 0.72);
+  --snap-shadow: none;
+  --settings-text: var(--snap-feature-text);
+  --settings-text-dim: var(--snap-feature-text-dim);
+  --settings-text-faint: var(--snap-feature-text-faint);
+  --settings-card-bg: var(--snap-feature-bg-soft);
+  --settings-card-border: var(--snap-feature-border);
+  --settings-divider: rgba(0, 0, 0, 0.08);
+  --downloads-text: var(--snap-feature-text);
+  --downloads-dim: var(--snap-feature-text-dim);
+  --downloads-faint: var(--snap-feature-text-faint);
+  --downloads-panel: var(--snap-feature-bg);
+  --downloads-panel-soft: var(--snap-feature-bg-soft);
+  --downloads-edge: var(--snap-feature-border);
+  --downloads-edge-strong: var(--snap-feature-border-strong);
+  --downloads-shadow: none;
+  --media-text: var(--snap-feature-text);
+  --media-text-dim: var(--snap-feature-text-dim);
+  --media-text-faint: var(--snap-feature-text-faint);
+  --media-accent: var(--snap-feature-text);
+  --media-accent-text: var(--snap-feature-bg);
+  --media-panel: var(--snap-feature-bg);
+  --media-panel-soft: var(--snap-feature-bg-soft);
+  --media-border: var(--snap-feature-border);
+  --media-border-strong: var(--snap-feature-border-strong);
+}
+
+body.theme-liquid-glass {
+  --snap-feature-bg: rgba(13, 16, 22, 0.52);
+  --snap-feature-bg-soft: rgba(255, 255, 255, 0.055);
+  --snap-feature-bg-hover: rgba(255, 255, 255, 0.105);
+  --snap-feature-bg-active: rgba(255, 255, 255, 0.16);
+  --snap-feature-bg-muted: rgba(8, 10, 14, 0.42);
+  --snap-feature-text: rgba(248, 250, 252, 0.94);
+  --snap-feature-text-dim: rgba(248, 250, 252, 0.68);
+  --snap-feature-text-faint: rgba(248, 250, 252, 0.46);
+  --snap-feature-border: rgba(255, 255, 255, 0.14);
+  --snap-feature-border-strong: rgba(255, 255, 255, 0.24);
+  --settings-text: var(--snap-feature-text);
+  --settings-text-dim: var(--snap-feature-text-dim);
+  --settings-text-faint: var(--snap-feature-text-faint);
+  --settings-accent: var(--snap-feature-text);
+}
+
+body.theme-liquid-glass .typo-fire-popup {
+  --snap-feature-bg: #ffffff;
+  --snap-feature-bg-soft: #f6f7f9;
+  --snap-feature-bg-hover: #eef1f5;
+  --snap-feature-bg-active: #e4e8ee;
+  --snap-feature-bg-muted: #f3f5f8;
+  --snap-feature-text: #1f2329;
+  --snap-feature-text-dim: rgba(31, 35, 41, 0.72);
+  --snap-feature-text-faint: rgba(31, 35, 41, 0.52);
+  --snap-feature-border: rgba(31, 35, 41, 0.1);
+  --snap-feature-border-strong: rgba(31, 35, 41, 0.22);
+}
+
+.snap-feature-window,
+.media-mixer-window,
+.productivity-window {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.snap-feature-surface,
+.settings-window,
+.downloads-window,
+.typo-fire-window,
+.typo-fire-popup,
+.productivity-titlebar,
+.productivity-panel,
+.productivity-card,
+.productivity-toast,
+.productivity-alert-card,
+.productivity-alert-actions,
+.pomodoro-timer-surface,
+.pomodoro-settings-drawer,
+.downloads-compose,
+.downloads-queue,
+.downloads-job,
+.media-compact-strip,
+.media-volume-dock,
+.media-volume-card,
+.media-feedback,
+.typo-fire-card {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg) !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.settings-window,
+.downloads-window,
+.typo-fire-window,
+.typo-fire-popup {
+  border: 1px solid var(--snap-feature-border) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.settings-header,
+.typo-fire-window-header {
+  background: linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%) !important;
+  border-bottom-color: var(--snap-feature-border) !important;
+}
+
+.settings-content {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(31, 35, 41, 0.045), transparent 34%),
+    var(--snap-feature-bg-muted) !important;
+}
+
+.settings-sidebar,
+.typo-fire-preset-bar,
+.typo-fire-yaml:not([open]) {
+  background: #f0f3f7 !important;
+  border-color: var(--snap-feature-border) !important;
+}
+
+.settings-card {
+  background: var(--snap-feature-bg) !important;
+  border-color: var(--snap-feature-border) !important;
+  box-shadow: 0 1px 2px rgba(31, 35, 41, 0.06),
+    0 14px 34px rgba(31, 35, 41, 0.08) !important;
+}
+
+.settings-row + .settings-row,
+.settings-row.has-divider,
+.settings-shell,
+.settings-sidebar {
+  border-color: var(--snap-feature-border) !important;
+}
+
+.media-compact-strip,
+.media-volume-dock,
+.media-feedback {
+  border-radius: var(--snap-feature-radius-pill) !important;
+}
+
+.productivity-titlebar,
+.productivity-panel,
+.productivity-card,
+.productivity-toast,
+.productivity-alert-card,
+.productivity-alert-actions,
+.pomodoro-timer-surface,
+.pomodoro-settings-drawer,
+.downloads-compose,
+.downloads-queue,
+.downloads-job,
+.media-volume-card,
+.typo-fire-card {
+  border-radius: var(--snap-feature-radius) !important;
+}
+
+.settings-card,
+.downloads-panel,
+.media-transport,
+.media-cover,
+.note-editor {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg-soft) !important;
+  box-shadow: none !important;
+}
+
+.media-transport {
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.typo-fire-preset,
+.typo-fire-help,
+.calendar-time-control,
+.calendar-repeat-control,
+.calendar-weekday-picker {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg) !important;
+  box-shadow: none !important;
+}
+
+.snap-feature-button,
+.settings-icon-action,
+.settings-action-mini,
+.settings-preset-btn,
+.settings-nav-item,
+.settings-switch,
+.downloads-icon-button,
+.downloads-primary,
+.media-icon-button,
+.media-play-button,
+.productivity-icon-button,
+.productivity-command,
+.productivity-chip,
+.productivity-check,
+.calendar-repeat-control button,
+.calendar-weekday-picker button,
+.typo-fire-prefix-option,
+.typo-fire-favorite,
+.typo-fire-status,
+.typo-fire-preset-actions .settings-icon-action,
+.typo-fire-presets-toggle,
+.typo-fire-popup-item {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transition:
+    transform var(--snap-motion-fast) var(--snap-motion-ease),
+    background-color var(--snap-motion-base) var(--snap-motion-ease),
+    border-color var(--snap-motion-base) var(--snap-motion-ease),
+    color var(--snap-motion-base) var(--snap-motion-ease),
+    opacity var(--snap-motion-base) var(--snap-motion-ease) !important;
+}
+
+.settings-icon-action:hover,
+.settings-action-mini:hover,
+.settings-preset-btn:hover,
+.settings-nav-item:hover,
+.settings-row:hover,
+.downloads-icon-button:hover,
+.media-icon-button:hover,
+.media-play-button:hover,
+.productivity-icon-button:hover,
+.productivity-command:hover,
+.productivity-chip:hover,
+.productivity-check:hover,
+.calendar-repeat-control button:hover,
+.calendar-weekday-picker button:hover,
+.typo-fire-prefix-option:hover,
+.typo-fire-favorite:hover,
+.typo-fire-status:hover,
+.typo-fire-preset-actions .settings-icon-action:hover,
+.typo-fire-presets-toggle:hover,
+.typo-fire-popup-item:hover {
+  background: var(--snap-feature-bg-hover) !important;
+  border-color: var(--snap-feature-border-strong) !important;
+}
+
+
+.snap-feature-button:focus-visible,
+.settings-icon-action:focus-visible,
+.settings-action-mini:focus-visible,
+.settings-preset-btn:focus-visible,
+.settings-nav-item:focus-visible,
+.settings-switch:focus-visible,
+.downloads-icon-button:focus-visible,
+.downloads-primary:focus-visible,
+.media-icon-button:focus-visible,
+.media-play-button:focus-visible,
+.productivity-icon-button:focus-visible,
+.productivity-command:focus-visible,
+.productivity-chip:focus-visible,
+.productivity-check:focus-visible,
+.calendar-repeat-control button:focus-visible,
+.calendar-weekday-picker button:focus-visible,
+.typo-fire-prefix-option:focus-visible,
+.typo-fire-favorite:focus-visible,
+.typo-fire-status:focus-visible,
+.typo-fire-preset-actions .settings-icon-action:focus-visible,
+.typo-fire-presets-toggle:focus-visible,
+.typo-fire-popup-item:focus-visible {
+  outline: 2px solid var(--snap-feature-text) !important;
+  outline-offset: 2px !important;
+}
+
+.settings-nav-item.active,
+.settings-preset-btn.active,
+.settings-switch.is-on {
+  color: #ffffff !important;
+  border-color: #1f2329 !important;
+  background: #1f2329 !important;
+}
+
+.downloads-primary,
+.media-expand-toggle.active,
+.productivity-icon-button.active,
+.productivity-chip.active,
+.productivity-check.checked,
+.calendar-weekday-picker button.active,
+.typo-fire-prefix-option.active,
+.typo-fire-status.active,
+.typo-fire-popup-item.selected {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border-strong) !important;
+  background: var(--snap-feature-bg-active) !important;
+}
+
+.settings-section-title {
+  font-size: 18px !important;
+  letter-spacing: -0.02em !important;
+}
+
+.settings-section-hint {
+  max-width: 58ch !important;
+}
+
+/* Settings desktop redesign: restrained depth, stronger hierarchy, no new components. */
+.settings-window {
+  border-color: rgba(31, 35, 41, 0.14) !important;
+  background: #fbfcfd !important;
+  box-shadow: 0 18px 55px rgba(18, 23, 31, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset !important;
+}
+
+.settings-header {
+  background: linear-gradient(180deg, #ffffff 0%, #f3f5f8 100%) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.78) inset !important;
+}
+
+.settings-title {
+  letter-spacing: -0.025em !important;
+}
+
+.settings-sidebar {
+  background:
+    linear-gradient(180deg, #f7f9fc 0%, #edf1f6 100%),
+    #f0f3f7 !important;
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.76) !important;
+}
+
+.settings-nav-item {
+  border-radius: 9px !important;
+}
+
+.settings-nav-item.active {
+  box-shadow: 0 8px 18px rgba(31, 35, 41, 0.17) !important;
+}
+
+.settings-content {
+  background:
+    radial-gradient(circle at 88% 2%, rgba(31, 35, 41, 0.075), transparent 28%),
+    linear-gradient(180deg, #f7f8fb 0%, #eef2f6 100%) !important;
+}
+
+.settings-section {
+  max-width: 900px !important;
+  margin-inline: auto !important;
+  gap: 14px !important;
+}
+
+.settings-card {
+  background: #ffffff !important;
+  border-color: rgba(31, 35, 41, 0.12) !important;
+  box-shadow: 0 1px 2px rgba(31, 35, 41, 0.06),
+    0 18px 42px rgba(31, 35, 41, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+.settings-row {
+  background: #ffffff !important;
+}
+
+.settings-row:hover {
+  background: #f8fafc !important;
+}
+
+.settings-row + .settings-row,
+.settings-row.has-divider {
+  border-top-color: rgba(31, 35, 41, 0.085) !important;
+}
+
+.settings-switch {
+  color: rgba(31, 35, 41, 0.72) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg) !important;
+}
+
+body.theme-liquid-glass .settings-window {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg) !important;
+  backdrop-filter: blur(var(--snap-glass-blur)) saturate(var(--snap-glass-saturation)) !important;
+  -webkit-backdrop-filter: blur(var(--snap-glass-blur)) saturate(var(--snap-glass-saturation)) !important;
+}
+
+body.theme-liquid-glass .settings-switch {
+  color: var(--snap-feature-text) !important;
+}
+
+body.theme-liquid-glass .settings-shell,
+body.theme-liquid-glass .settings-header,
+body.theme-liquid-glass .settings-sidebar,
+body.theme-liquid-glass .settings-content,
+body.theme-liquid-glass .settings-card,
+body.theme-liquid-glass .settings-row {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg-soft) !important;
+}
+
+body.theme-liquid-glass .typo-fire-window {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg) !important;
+  backdrop-filter: blur(var(--snap-glass-blur)) saturate(var(--snap-glass-saturation)) !important;
+  -webkit-backdrop-filter: blur(var(--snap-glass-blur)) saturate(var(--snap-glass-saturation)) !important;
+}
+
+body.theme-liquid-glass .typo-fire-window-header,
+body.theme-liquid-glass .typo-fire-preset-bar,
+body.theme-liquid-glass .typo-fire-card,
+body.theme-liquid-glass .typo-fire-yaml:not([open]) {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg-soft) !important;
+}
+
+.settings-row {
+  padding: 14px 16px !important;
+}
+
+.settings-row-label {
+  font-size: 13.5px !important;
+}
+
+.settings-select,
+.settings-input,
+.settings-textarea,
+.shortcut-field {
+  border-radius: 8px !important;
+}
+
+.typo-fire-favorite.active {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border-strong) !important;
+  background: var(--snap-feature-bg) !important;
+}
+
+.typo-fire-favorite.active svg {
+  fill: var(--snap-feature-text) !important;
+}
+
+.settings-row-desc,
+.settings-section-hint,
+.downloads-title-wrap,
+.downloads-url-field span,
+.downloads-folder-row span,
+.downloads-meta-line,
+.media-now-copy span,
+.media-volume-head,
+.media-empty-inline,
+.productivity-brand small,
+.productivity-meta,
+.typo-fire-trigger-preview,
+.typo-fire-help,
+.typo-fire-popup-preview,
+.typo-fire-popup-item small {
+  color: var(--snap-feature-text-dim) !important;
+}
+
+.settings-input,
+.settings-textarea,
+.settings-select,
+.shortcut-field,
+.downloads-url-field input,
+.downloads-folder-path,
+.calendar-add-line input,
+.calendar-time-control input,
+.pomodoro-number-field input,
+.typo-fire-section .settings-input,
+.typo-fire-section .settings-textarea,
+.typo-fire-section .settings-select {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg) !important;
+  box-shadow: none !important;
+}
+
+.calendar-add-line input:focus,
+.calendar-time-control input:focus,
+.pomodoro-number-field input:focus,
+.settings-input:focus,
+.settings-textarea:focus,
+.settings-select:focus {
+  border-color: var(--snap-feature-border-strong) !important;
+}
+
+.shortcut-field {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg) !important;
+}
+
+.shortcut-field:hover:not(:disabled) {
+  border-color: var(--snap-feature-border-strong) !important;
+  background: var(--snap-feature-bg-hover) !important;
+}
+
+.shortcut-field.recording {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border-strong) !important;
+  background: var(--snap-feature-bg-active) !important;
+  animation: none !important;
+}
+
+.shortcut-empty,
+.shortcut-recording {
+  color: var(--snap-feature-text-dim) !important;
+}
+
+.settings-input::placeholder,
+.settings-textarea::placeholder,
+.downloads-url-field input::placeholder,
+.calendar-add-line input::placeholder,
+.typo-fire-section .settings-input::placeholder,
+.typo-fire-section .settings-textarea::placeholder {
+  color: var(--snap-feature-text-faint) !important;
+}
+
+.settings-slider,
+.media-session-controls input[type="range"],
+.media-volume-card input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 18px;
+  padding: 0;
+  border: 0 !important;
+  background: transparent !important;
+  accent-color: var(--snap-feature-text);
+}
+
+.settings-slider {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+}
+
+.settings-slider::-webkit-slider-runnable-track,
+.media-session-controls input[type="range"]::-webkit-slider-runnable-track,
+.media-volume-card input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border: 0;
+  border-radius: 999px;
+  background: #d7d7d7;
+}
+
+.settings-slider::-webkit-slider-thumb,
+.media-session-controls input[type="range"]::-webkit-slider-thumb,
+.media-volume-card input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -4px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--snap-feature-text);
+  cursor: pointer;
+}
+
+.settings-slider::-moz-range-track,
+.media-session-controls input[type="range"]::-moz-range-track,
+.media-volume-card input[type="range"]::-moz-range-track {
+  height: 4px;
+  border: 0;
+  border-radius: 999px;
+  background: #d7d7d7;
+}
+
+.settings-slider::-moz-range-thumb,
+.media-session-controls input[type="range"]::-moz-range-thumb,
+.media-volume-card input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--snap-feature-text);
+  cursor: pointer;
+}
+
+.productivity-day {
+  color: var(--snap-feature-text) !important;
+  border-color: transparent !important;
+  background: transparent !important;
+}
+
+.productivity-day:hover {
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg-hover) !important;
+}
+
+.productivity-day.active {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border-strong) !important;
+  background: var(--snap-feature-bg-active) !important;
+}
+
+.productivity-day.muted {
+  color: var(--snap-feature-text-faint) !important;
+}
+
+.pomodoro-progress-track {
+  stroke: var(--snap-feature-bg-hover) !important;
+}
+
+.pomodoro-progress-value {
+  stroke: var(--snap-feature-text) !important;
+}
+
+.pomodoro-time-stack {
+  color: var(--snap-feature-text) !important;
+  border-color: var(--snap-feature-border) !important;
+  background: var(--snap-feature-bg) !important;
+}
+
+.pomodoro-round-pill {
+  color: var(--snap-feature-text-dim) !important;
+  background: var(--snap-feature-bg-hover) !important;
+}
+
+.productivity-clock {
+  color: var(--snap-feature-text) !important;
+}
+
+.pomodoro-time-stack small,
+.pomodoro-next-line {
+  color: var(--snap-feature-text-dim) !important;
+}
+
+.media-drag-handle {
+  border-color: transparent !important;
+  background: transparent !important;
+}
+
+.media-compact-strip .media-icon-button,
+.media-compact-strip .media-play-button,
+.media-compact-strip .media-expand-toggle.active {
+  color: var(--snap-feature-text) !important;
+  border-color: transparent !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+}
+
+.media-compact-strip .media-icon-button:hover,
+.media-compact-strip .media-play-button:hover {
+  border-color: transparent !important;
+  background: rgba(0, 0, 0, 0.045) !important;
+  transform: translateY(-1px);
+}
+
+.media-cover {
+  background: var(--snap-feature-bg-hover) !important;
+}
+
+.media-cover {
+  overflow: hidden;
+}

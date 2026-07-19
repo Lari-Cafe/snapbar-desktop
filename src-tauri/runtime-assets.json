@@ -1,0 +1,69 @@
+{
+  "assets": [
+    {
+      "id": "ffmpeg",
+      "feature": "recording",
+      "displayName": "Gravacao",
+      "platform": "windows-x64",
+      "runtimePath": "bin/ffmpeg.exe",
+      "packagePath": "resources/bin/ffmpeg.exe",
+      "version": "8.1.1 essentials",
+      "license": "FFmpeg/Gyan essentials build license",
+      "source": "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip",
+      "sha256": "228d7a8556258de907fdb55f36850078ebc7680b84ec30d84ea02e99bec1d1eb",
+      "repairUrl": "https://github.com/Lari-Cafe/SnapBar/releases/latest"
+    },
+    {
+      "id": "ffmpeg-internet-downloads",
+      "feature": "internetDownloads",
+      "displayName": "Downloads",
+      "platform": "windows-x64",
+      "runtimePath": "bin/ffmpeg.exe",
+      "packagePath": "resources/bin/ffmpeg.exe",
+      "version": "8.1.1 essentials",
+      "license": "FFmpeg/Gyan essentials build license",
+      "source": "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip",
+      "sha256": "228d7a8556258de907fdb55f36850078ebc7680b84ec30d84ea02e99bec1d1eb",
+      "repairUrl": "https://github.com/Lari-Cafe/SnapBar/releases/latest"
+    },
+    {
+      "id": "ffprobe",
+      "feature": "internetDownloads",
+      "displayName": "Downloads",
+      "platform": "windows-x64",
+      "runtimePath": "bin/ffprobe.exe",
+      "packagePath": "resources/bin/ffprobe.exe",
+      "version": "8.1.1 essentials",
+      "license": "FFmpeg/Gyan essentials build license",
+      "source": "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip",
+      "sha256": "0fde260f5abd35c9cafd96f594cc76365a780c1b73a90e35b6a3409ea1db1bf0",
+      "repairUrl": "https://github.com/Lari-Cafe/SnapBar/releases/latest"
+    },
+    {
+      "id": "yt-dlp",
+      "feature": "internetDownloads",
+      "displayName": "Downloads",
+      "platform": "windows-x64",
+      "runtimePath": "bin/yt-dlp.exe",
+      "packagePath": "resources/bin/yt-dlp.exe",
+      "version": "2026.06.09",
+      "license": "Unlicense",
+      "source": "https://github.com/yt-dlp/yt-dlp/releases/download/2026.06.09/yt-dlp.exe",
+      "sha256": "3a48cb955d55c8821b60ccbdbbc6f61bc958f2f3d3b7ad5eaf3d83a543293a27",
+      "repairUrl": "https://github.com/Lari-Cafe/SnapBar/releases/latest"
+    },
+    {
+      "id": "deno",
+      "feature": "internetDownloads",
+      "displayName": "Downloads",
+      "platform": "windows-x64",
+      "runtimePath": "bin/deno.exe",
+      "packagePath": "resources/bin/deno.exe",
+      "version": "2.8.1",
+      "license": "MIT",
+      "source": "https://dl.deno.land/release/v2.8.1/deno-x86_64-pc-windows-msvc.zip",
+      "sha256": "a8afddac131261dc9e085c6a1a79544f0567bd09e481034b5d1533588cba9b30",
+      "repairUrl": "https://github.com/Lari-Cafe/SnapBar/releases/latest"
+    }
+  ]
+}

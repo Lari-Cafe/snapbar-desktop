@@ -1,0 +1,2 @@
+IMPLEMENTAR XD LAUNCHER NO XD TOOLBAR
+- SHOW ALL - abrir o xd launcher

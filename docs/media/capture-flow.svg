@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-label="Capture flow">
+  <rect width="1200" height="520" rx="32" fill="#151718"/>
+  <text x="80" y="92" fill="#fff" font-family="Inter,Segoe UI,sans-serif" font-size="46" font-weight="850">Capturas e gravacoes</text>
+  <text x="80" y="138" fill="#b9c2bd" font-family="Inter,Segoe UI,sans-serif" font-size="23">Escolha pastas, capture prints e grave a tela com audio.</text>
+  <g transform="translate(90 205)">
+    <rect width="260" height="150" rx="18" fill="#242829" stroke="#fff" stroke-opacity=".12"/>
+    <text x="28" y="54" fill="#fff" font-family="Inter,Segoe UI,sans-serif" font-size="24" font-weight="800">Print</text>
+    <text x="28" y="94" fill="#aeb8b2" font-family="Inter,Segoe UI,sans-serif" font-size="18">salva + clipboard</text>
+  </g>
+  <path d="M390 280h100" stroke="#6ea783" stroke-width="5" stroke-linecap="round"/>
+  <path d="M490 280l-16-12v24z" fill="#6ea783"/>
+  <g transform="translate(520 205)">
+    <rect width="260" height="150" rx="18" fill="#242829" stroke="#fff" stroke-opacity=".12"/>
+    <text x="28" y="54" fill="#fff" font-family="Inter,Segoe UI,sans-serif" font-size="24" font-weight="800">Gravacao</text>
+    <text x="28" y="94" fill="#aeb8b2" font-family="Inter,Segoe UI,sans-serif" font-size="18">microfone + sistema</text>
+  </g>
+  <path d="M820 280h100" stroke="#6ea783" stroke-width="5" stroke-linecap="round"/>
+  <path d="M920 280l-16-12v24z" fill="#6ea783"/>
+  <g transform="translate(950 205)">
+    <rect width="170" height="150" rx="18" fill="#242829" stroke="#fff" stroke-opacity=".12"/>
+    <text x="28" y="54" fill="#fff" font-family="Inter,Segoe UI,sans-serif" font-size="24" font-weight="800">Pastas</text>
+    <text x="28" y="94" fill="#aeb8b2" font-family="Inter,Segoe UI,sans-serif" font-size="18">configuraveis</text>
+  </g>
+</svg>
